@@ -30,8 +30,9 @@ check_deps() {
     dpkg -s libx11-dev    >/dev/null 2>&1 || missing+=("libx11-dev")
     dpkg -s libxext-dev   >/dev/null 2>&1 || missing+=("libxext-dev")
 
-    # Runtime deps
+    # Runtime deps (kernel headers needed for DKMS to build v4l2loopback)
     dpkg -s v4l2loopback-dkms >/dev/null 2>&1 || missing+=("v4l2loopback-dkms")
+    dpkg -s "linux-headers-$(uname -r)" >/dev/null 2>&1 || missing+=("linux-headers-$(uname -r)")
     command -v v4l2-ctl       >/dev/null || missing+=("v4l-utils")
 
     if [ ${#missing[@]} -gt 0 ]; then
