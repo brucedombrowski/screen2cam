@@ -7,5 +7,6 @@ screen2cam
 # User config (contains meeting credentials)
 config.ini
 
-# Local dev settings
-.claude/
+# Local dev settings (keep commands/ tracked for skills)
+.claude/*
+!.claude/commands/

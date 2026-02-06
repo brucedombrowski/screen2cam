@@ -48,6 +48,8 @@ Then in your video app, select **"screen2cam"** as the camera.
 ./deploy_linux.sh                        # full auto — setup + build + run
 ./deploy_linux.sh --setup                # just install deps + load module
 ./deploy_linux.sh --run                  # just build + run (deps already done)
+./deploy_linux.sh --check                # validate environment (no install, no sudo)
+./demo.sh --check                        # same, for the demo script
 ./screen2cam --device /dev/video10 --fps 15
 
 # macOS
