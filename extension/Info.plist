@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>com.screen2cam.extension</string>
+    <key>CFBundleName</key>
+    <string>screen2cam Camera</string>
+    <key>CFBundleDisplayName</key>
+    <string>screen2cam</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundlePackageType</key>
+    <string>XPC!</string>
+    <key>CFBundleExecutable</key>
+    <string>screen2cam-ext</string>
+    <key>NSExtension</key>
+    <dict>
+        <key>NSExtensionPointIdentifier</key>
+        <string>com.apple.cmio.registerassistantservice</string>
+        <key>NSExtensionPrincipalClass</key>
+        <string>Screen2CamProviderSource</string>
+    </dict>
+    <key>NSCameraUsageDescription</key>
+    <string>screen2cam provides a virtual camera from your screen capture.</string>
+</dict>
+</plist>
