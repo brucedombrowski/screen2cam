@@ -40,3 +40,21 @@ jobs:
 
       - name: ShellCheck
         run: shellcheck demo_mac.sh
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          install: mingw-w64-x86_64-gcc make
+
+      - name: Build
+        shell: msys2 {0}
+        run: make
+
+      - name: Verify binary
+        shell: msys2 {0}
+        run: test -f screen2cam.exe

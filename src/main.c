@@ -3,8 +3,14 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
+
+#ifdef _WIN32
+#include "platform.h"
+#include "getopt_win.h"
+#else
 #include <unistd.h>
 #include <getopt.h>
+#endif
 
 #include "capture.h"
 #include "convert.h"
@@ -12,11 +18,20 @@
 
 static volatile sig_atomic_t running = 1;
 
+#ifdef _WIN32
+static BOOL WINAPI on_console_ctrl(DWORD ctrl_type)
+{
+    (void)ctrl_type;
+    running = 0;
+    return TRUE;
+}
+#else
 static void on_signal(int sig)
 {
     (void)sig;
     running = 0;
 }
+#endif
 
 static void usage(const char *prog)
 {
@@ -26,7 +41,7 @@ static void usage(const char *prog)
         "Stream your screen as a virtual camera for video calls.\n"
         "\n"
         "Options:\n"
-#ifdef __APPLE__
+#if defined(_WIN32) || defined(__APPLE__)
         "  -d, --device PATH   output path or '-' for stdout  [-]\n"
 #else
         "  -d, --device PATH   v4l2loopback device  [/dev/video10]\n"
@@ -38,7 +53,7 @@ static void usage(const char *prog)
 
 int main(int argc, char *argv[])
 {
-#ifdef __APPLE__
+#if defined(_WIN32) || defined(__APPLE__)
     const char *device = "-";
 #else
     const char *device = "/dev/video10";
@@ -67,8 +82,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+#ifdef _WIN32
+    SetConsoleCtrlHandler(on_console_ctrl, TRUE);
+#else
     signal(SIGINT,  on_signal);
     signal(SIGTERM, on_signal);
+#endif
 
     /* Initialize screen capture */
     capture_ctx_t *cap = capture_init();

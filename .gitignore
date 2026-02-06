@@ -1,5 +1,6 @@
 # Build artifacts
 screen2cam
+*.exe
 *.o
 *.dSYM/
 
