@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libx11-dev libxext-dev
+
+      - name: Build
+        run: make
+
+      - name: Verify binary
+        run: test -f screen2cam
+
+      - name: ShellCheck
+        run: shellcheck demo.sh deploy_linux.sh
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: make
+
+      - name: Verify binary
+        run: test -f screen2cam
+
+      - name: Install ShellCheck
+        run: brew install shellcheck
+
+      - name: ShellCheck
+        run: shellcheck demo_mac.sh
