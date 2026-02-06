@@ -31,7 +31,7 @@ Then in your video app, select **"screen2cam"** as the camera.
 ## Usage
 
 ```bash
-./demo.sh                           # full auto setup + run
+./demo.sh                           # live demo — full auto setup + run
 ./screen2cam --help                  # manual usage
 ./screen2cam --device /dev/video10 --fps 15
 ```
