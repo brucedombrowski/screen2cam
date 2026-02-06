@@ -26,7 +26,11 @@ static void usage(const char *prog)
         "Stream your screen as a virtual camera for video calls.\n"
         "\n"
         "Options:\n"
+#ifdef __APPLE__
+        "  -d, --device PATH   output path or '-' for stdout  [-]\n"
+#else
         "  -d, --device PATH   v4l2loopback device  [/dev/video10]\n"
+#endif
         "  -f, --fps N         target frame rate     [15]\n"
         "  -h, --help          show this help\n",
         prog);
@@ -34,7 +38,11 @@ static void usage(const char *prog)
 
 int main(int argc, char *argv[])
 {
+#ifdef __APPLE__
+    const char *device = "-";
+#else
     const char *device = "/dev/video10";
+#endif
     int fps = 15;
 
     static struct option long_opts[] = {

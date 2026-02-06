@@ -154,8 +154,20 @@ capture_ctx_t *capture_init(void)
         }
 
         SCDisplay *display = content.displays[0];
-        ctx->width  = (int)(display.width);
-        ctx->height = (int)(display.height);
+
+        /* Use native pixel dimensions — display.width/height return logical
+           points which are smaller than actual pixels on Retina displays,
+           causing only the top-left corner to be captured. */
+        CGDirectDisplayID displayID = display.displayID;
+        CGDisplayModeRef displayMode = CGDisplayCopyDisplayMode(displayID);
+        if (displayMode) {
+            ctx->width  = (int)CGDisplayModeGetPixelWidth(displayMode);
+            ctx->height = (int)CGDisplayModeGetPixelHeight(displayMode);
+            CGDisplayModeRelease(displayMode);
+        } else {
+            ctx->width  = (int)(display.width);
+            ctx->height = (int)(display.height);
+        }
 
         /* Configure stream: BGRA pixel format, up to 60 fps */
         SCStreamConfiguration *config = [[SCStreamConfiguration alloc] init];

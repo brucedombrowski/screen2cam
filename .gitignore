@@ -1,0 +1,10 @@
+# Build artifacts
+screen2cam
+*.o
+*.dSYM/
+
+# User config (contains meeting credentials)
+config.ini
+
+# Local dev settings
+.claude/
