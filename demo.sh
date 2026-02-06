@@ -60,7 +60,7 @@ load_module() {
         exclusive_caps=1
 
     # Wait for device to appear
-    for i in $(seq 1 10); do
+    for _i in $(seq 1 10); do
         [ -e "$DEVICE" ] && break
         sleep 0.5
     done
